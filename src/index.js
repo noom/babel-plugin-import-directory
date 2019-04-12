@@ -74,13 +74,20 @@ export default function dir (babel) {
 
         if (!files.length) { return }
 
+        /*
+          Generate `import * as _actionA from "./actions/action.a";` section.
+        */
+        const declarator = isExplicitWildcard ? t.importNamespaceSpecifier : t.importDefaultSpecifier;
         const imports = files.map(([file, fileName, fileUid]) =>
           t.importDeclaration(
-            [t.importNamespaceSpecifier(fileUid)],
+            [declarator(fileUid)],
             t.stringLiteral(pathPrefix + _path.join(cleanedPath, ...file))
           )
         )
 
+        /*
+          Generate `const _dirImport = {};` statement.
+        */
         let dirVar = path.scope.generateUidIdentifier('dirImport')
         path.insertBefore(t.variableDeclaration(
           'const', [
@@ -88,6 +95,9 @@ export default function dir (babel) {
           ]
         ))
 
+        /*
+          Generate `const actions = _dirImport;` statement.
+        */
         for (let i = node.specifiers.length - 1; i >= 0; i--) {
           let dec = node.specifiers[i]
 
@@ -117,6 +127,9 @@ export default function dir (babel) {
           }
         }
 
+        /*
+          Generate `_dirImport.actionA = _actionA;` section.
+        */
         if (isExplicitWildcard) {
           files.forEach(([file, fileName, fileUid]) =>
             path.insertAfter(buildRequire({
