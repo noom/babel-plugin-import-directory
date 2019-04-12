@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-import-directory",
-  "version": "1.0.2",
+  "version": "1.1.0-alpha.1",
   "description": "Are you sick and tired of writing an `index.js` file, just to import/export all the other files in a directory?\n\nDon't seek more :)\n\nJust use `babel-plugin-import-directory` for that!",
   "main": "lib/index.js",
   "scripts": {
@@ -9,19 +9,20 @@
     "test:watch": "yarn test -- --watch",
     "report": "nyc report --reporter=html",
     "build": "babel -d ./lib ./src",
-    "prepublish": "babel -d ./lib ./src --minified"
+    "prepublish": "babel -d ./lib ./src --minified",
+    "install": "npm run build"
   },
   "dependencies": {
-    "@babel/template": "^7.1.2"
+    "@babel/template": "^7.4.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.1.2",
-    "@babel/core": "^7.1.2",
-    "@babel/preset-env": "^7.1.0",
-    "@babel/register": "^7.0.0",
-    "ava": "^0.22.0",
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/register": "^7.4.0",
+    "ava": "^1.4.1",
     "node-readme": "^0.1.9",
-    "nyc": "^11.2.1"
+    "nyc": "^13.3.0"
   },
   "repository": "git@github.com:Anmo/babel-plugin-import-directory.git",
   "author": "Anmo <btavares26@gmail.com>",
